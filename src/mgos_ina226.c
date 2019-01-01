@@ -110,7 +110,7 @@ bool mgos_ina226_get_bus_voltage(struct mgos_ina226 *sensor, float *volts) {
     return false;
   }
   // LOG(LL_DEBUG, ("Vbus = %d", val));
-  *volts = (val * 0.00125);    // 1.25mV per LSB
+  *volts = val * 1.25 / 1e3;   // 1.25mV per LSB
   return true;
 }
 
@@ -125,7 +125,7 @@ bool mgos_ina226_get_shunt_voltage(struct mgos_ina226 *sensor, float *volts) {
     return false;
   }
   // LOG(LL_DEBUG, ("Vshunt = %d", val));
-  *volts = val * 2.5 / 10e6;   // 2.5uV per LSB
+  *volts = val * 2.5 / 1e6;   // 2.5uV per LSB
   return true;
 }
 

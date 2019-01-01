@@ -40,7 +40,7 @@ static void ina226_timer_cb(void *user_data) {
   mgos_ina226_get_shunt_voltage(sensor, &shunt);
   mgos_ina226_get_current(sensor, &current);
   LOG(LL_INFO, ("Vbus=%.3f V Vshunt=%.0f uV Rshunt=%.3f Ohm Ishunt=%.1f mA",
-      bus, shunt*10e6, res, current*10e3));
+      bus, shunt*1e6, res, current*1e3));
   }
 }
 
