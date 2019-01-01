@@ -18,10 +18,15 @@
 
 // A poor man's detect -- read config register and compare to power on default
 static bool mgos_ina226_detect(struct mgos_i2c *i2c, uint8_t i2caddr) {
-  uint16_t val;
+  int man_id, die_id;
 
-  val = mgos_i2c_read_reg_w(i2c, i2caddr, MGOS_INA226_REG_CONFIG);
-  if (val != 0x399F) {
+  man_id = mgos_i2c_read_reg_w(i2c, i2caddr, MGOS_INA3221_REG_MANID);
+  die_id = mgos_i2c_read_reg_w(i2c, i2caddr, MGOS_INA3221_REG_DIEID);
+
+  if (man_id != 0x5449) {
+    return false;
+  }
+  if ((die_id & 0xfff0) != 0x2260) {
     return false;
   }
   return true;
@@ -41,8 +46,8 @@ static bool mgos_ina226_reset(struct mgos_ina226 *s) {
   mgos_usleep(2000);
 
   // Set config register:
-  val  = AVG_1 << 9;   // Samples
-  val |= CT_1100US << 6;  // Bus conversion time
+  val  = AVG_1 << 9;     // Samples
+  val |= CT_1100US << 6; // Bus conversion time
   val |= CT_1100US << 3; // Shunt conversion time
   val |= MGOS_INA226_CONF_MODE_CONT_SHUNT_BUS;
 
@@ -105,7 +110,7 @@ bool mgos_ina226_get_bus_voltage(struct mgos_ina226 *sensor, float *volts) {
     return false;
   }
   LOG(LL_DEBUG, ("Vbus = %d", val));
-  *volts  = val * 1.25 / 10e3;   // 1.25mV per LSB
+  *volts = val * 1.25 / 10e3;    // 1.25mV per LSB
   return true;
 }
 

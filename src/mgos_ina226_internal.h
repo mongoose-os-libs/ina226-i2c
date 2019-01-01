@@ -33,6 +33,9 @@ extern "C" {
 #define MGOS_INA226_REG_POWER         (0x03)
 #define MGOS_INA226_REG_CURRENT       (0x04)
 #define MGOS_INA226_REG_CALIB         (0x05)
+#define MGOS_INA3221_REG_MANID        (0xfe)
+#define MGOS_INA3221_REG_DIEID        (0xff)
+
 
 enum mgos_ina226_conf_avg {
   AVG_1    = 0, // Default
