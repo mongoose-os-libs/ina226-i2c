@@ -2,7 +2,6 @@ author: Pim van Pelt <pim@google.com>
 type: lib
 description: Mongoose OS library for INA226
 version: 1.0
-platforms: [esp8266, esp32]
 
 sources:
   - src
