@@ -14,7 +14,7 @@ config_schema:
   - ["ina226.i2caddr", "i", 0x40, {title: "I2C Address"}]
 
 libs:
-  - origin: https://github.com/mongoose-os-libs/i2c
+  - location: https://github.com/mongoose-os-libs/i2c
 
 tags:
   - c
